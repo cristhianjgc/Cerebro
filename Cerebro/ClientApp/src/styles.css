@@ -9,8 +9,27 @@ code {
   color: #e01a76;
 }
 
+.w-50 {
+  width: 50%;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.h-50 {
+  height: 50%;
+}
+
+.h-100 {
+  height: 100%;
+}
+
 .btn-primary {
   color: #fff;
-  background-color: #1b6ec2;
   border-color: #1861ac;
+  background-color: #1b6ec2;
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
