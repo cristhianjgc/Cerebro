@@ -1,3 +1,4 @@
+using Cerebro.Models;
 using System.Numerics;
 
 namespace Cerebro.Helpers
@@ -19,7 +20,7 @@ namespace Cerebro.Helpers
             return previous;
         }
 
-        public static BigInteger GetPosition(ulong n)
+        public static BigInteger GetPosition(ulong n, GlobalSettings settings)
         {
             return n < 2 ? n : Fibonacci(n);
         }

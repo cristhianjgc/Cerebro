@@ -1,15 +1,8 @@
 import { lastValueFrom } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
-import { FibonacciResponse } from '../core/models';
 import { HomeService } from './services/home.service';
 import { FormBuilder, Validators } from "@angular/forms";
-
-export interface PeriodicElement {
-  name: string;
-  weight: number;
-  symbol: string;
-  position: number;
-}
+import { FibonacciRequest, FibonacciResponse, HistoricalResponse } from '../core/models';
 
 @Component({
   selector: 'app-home',
@@ -17,22 +10,14 @@ export interface PeriodicElement {
   templateUrl: './home.component.html',
 })
 export class HomeComponent implements OnInit {
-  notes = [];
+  notes = [1];
   result?: number;
-  
+  dataSource: FibonacciRequest[] = [];
   displayedColumns: string[] = [
+    'username',
     'position',
-    'name',
-    'weight',
-    'symbol'
-  ];
-  
-  dataSource: PeriodicElement[] = [
-    {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-    {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-    {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-    {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-    {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'}
+    'result',
+    'date'
   ];
 
   fibonacci = this.fb.group({
@@ -45,7 +30,7 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    
+    this.getHistorical();
   }
 
   getPosition() {
@@ -59,5 +44,15 @@ export class HomeComponent implements OnInit {
         console.log('2. ', error);
       });
     }
+  }
+
+  getHistorical() {
+    const fibonacci$ = this.homeService.getHistorical();
+    lastValueFrom(fibonacci$).then((response: HistoricalResponse) => {
+      console.log('A. ', response);
+      this.dataSource = response.historical;
+    }).catch((error) => {
+      console.log('B. ', error);
+    });
   }
 }

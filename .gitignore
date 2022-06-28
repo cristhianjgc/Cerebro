@@ -6,6 +6,7 @@
 # User-specific files
 *.suo
 *.user
+*.editorconfig
 *.userosscache
 *.sln.docstates
 
@@ -25,6 +26,10 @@ bin/
 Bin/
 obj/
 Obj/
+
+# DB Project
+CortexDB/CortexDB.jfm
+CortexDB/CortexDB.dbmdl
 
 # Visual Studio 2015 cache/options directory
 .vs/

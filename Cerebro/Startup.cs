@@ -13,6 +13,9 @@ namespace Cerebro
         
         public void ConfigureServices(IServiceCollection services)
         {
+            // AppSettings
+            services.Configure<GlobalSettings>(Configuration);
+
             services.AddSession();
             services.AddSignalR();
             services.AddControllersWithViews().AddNewtonsoftJson();

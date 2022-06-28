@@ -44,7 +44,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HttpClientModule,
     FormsModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' }
+      { path: '', component: HomeComponent },
+      { path: '**', redirectTo: '', pathMatch: 'full'}
     ]),
     BrowserAnimationsModule
   ],
