@@ -1,4 +1,5 @@
 ﻿using Cerebro.Models;
+using Microsoft.AspNetCore.SpaServices.AngularCli;
 
 namespace Cerebro
 {
@@ -29,6 +30,11 @@ namespace Cerebro
                 .AllowAnyHeader()
                 .AllowAnyOrigin();
             }));
+
+            services.AddSpaStaticFiles(config =>
+            {
+                config.RootPath = "ClientApp/dist";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,12 +52,23 @@ namespace Cerebro
 
             app.UseRouting();
             app.UseStaticFiles();
+            app.UseSpaStaticFiles();
             app.UseCors("CorsPolicy");
             app.UseHttpsRedirection();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(name: "default", pattern: "{controller}/{action}/{id?}");
                 endpoints.MapHub<NotifyHub>("/notify");
+            });
+
+            app.UseSpa(spa =>
+            {
+                spa.Options.SourcePath = "ClientApp";
+
+                if (env.IsDevelopment())
+                {
+                    spa.UseAngularCliServer("start");
+                }
             });
         }
     }

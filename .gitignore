@@ -37,6 +37,7 @@ Cerebro/wwwroot/dist/
 Cerebro/ClientApp/dist/
 Cerebro/ClientApp/.angular
 Cerebro/ClientApp/node_modules
+Cerebro/Properties/ServiceDependencies/
 Cerebro/bin
 Cerebro/obj
 

@@ -1,11 +1,11 @@
-import { lastValueFrom } from 'rxjs';
 import { Sort } from '@angular/material/sort';
+import { lastValueFrom, Subscription } from 'rxjs';
 import { HomeService } from './services/home.service';
 import { FormBuilder, Validators } from "@angular/forms";
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { StorageService } from '../core/services/storage.service';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { ProfileService } from '../profile/services/profile.service';
+import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FibonacciRequest, FibonacciResponse, HistoricalResponse } from '../core/models';
 
 @Component({
@@ -13,11 +13,12 @@ import { FibonacciRequest, FibonacciResponse, HistoricalResponse } from '../core
   styleUrls: ['./home.component.css'],
   templateUrl: './home.component.html',
 })
-export class HomeComponent implements OnInit, AfterViewInit {
+export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   notes = [1];
   result?: number;
   usersPageSize = 5;
   userId: string = '';
+  subs: Subscription[] = [];
   lastRequest?: FibonacciRequest;
   usersPageSizeOptions = [5, 10, 25, 100];
   dataSource: MatTableDataSource<FibonacciRequest>;
@@ -32,23 +33,30 @@ export class HomeComponent implements OnInit, AfterViewInit {
   constructor(
     private fb: FormBuilder,
     private homeService: HomeService,
-    private storageService: StorageService
+    private profileService: ProfileService
   )
   {
     this.dataSource = new MatTableDataSource<FibonacciRequest>([]);
   }
 
   ngOnInit(): void {
+    // User ID
+    this.getUser();
+
     // Historical
     this.getHistorical();
-
-    // User ID
-    this.userId = this.storageService.getItemFromSessionStorage('userId');
   }
 
   ngAfterViewInit(): void {
     // Sort and Paginator
     this.dataSource.paginator = this.paginator!;
+  }
+
+  getUser() {
+    let u = this.profileService.userId$.subscribe((userId) => {
+      this.userId = userId;
+    });
+    this.subs.push(u);
   }
 
   getPosition() {
@@ -117,5 +125,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
   clearResult() {
     this.result = undefined;
     this.fibonacci.controls.nth.setValue('');
+  }
+
+  ngOnDestroy(): void {
+    this.subs.map(s => s.unsubscribe());
   }
 }

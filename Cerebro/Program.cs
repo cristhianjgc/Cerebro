@@ -11,9 +11,8 @@ namespace Cerebro
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-            .ConfigureAppConfiguration((builderContext, config) => {
-                IWebHostEnvironment environment = builderContext.HostingEnvironment;
-                config.AddJsonFile($"appsettings.json", optional: true, reloadOnChange: true);
+            .ConfigureAppConfiguration((_, config) => {
+                config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
                 config.AddEnvironmentVariables();
             })
             .UseStartup<Startup>();

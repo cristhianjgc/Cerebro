@@ -20,15 +20,19 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+    // Init User
     this.userId = this.storageService.getItemFromSessionStorage('userId');
     if (!this.userId) {
       const user$ = this.profileService.createUser(null);
       lastValueFrom(user$).then((response: UserResponse) => {
         this.userId = response.user.userId;
+        this.profileService.setUser(this.userId);
         this.storageService.setItemToSessionStorage('userId', this.userId);
       }).catch((error) => {
         console.log(error);
       });
+    } else {
+      this.profileService.setUser(this.userId);
     }
   }
 }
