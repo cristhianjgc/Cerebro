@@ -1,0 +1,50 @@
+<mat-toolbar color="primary">
+  <!-- Menu Toggle -->
+  <button mat-icon-button>
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <!-- App Name and Description -->
+  <div fxLayout="column" fxLayoutAlign="center start" fxFlexOffset="1.5rem">
+    <div class="header"> Cerebro </div>
+    <div class="subtitle"> FIBONACCI CALCULATOR </div>
+  </div>
+
+  <span class="spacer"></span>
+
+  <!-- <button mat-icon-button>
+    <mat-icon>manage_accounts</mat-icon>
+  </button> -->
+
+  <!-- User Info -->
+  <button mat-icon-button [matMenuTriggerFor]="userInfo">
+    <mat-icon>person</mat-icon>
+  </button>
+
+  <!-- User Info Menu -->
+  <mat-menu #userInfo="matMenu">
+    <mat-list>
+      <mat-list-item>
+        <mat-icon mat-list-icon>format_list_bulleted</mat-icon>
+        <div mat-line> User ID </div>
+        <div mat-line> {{ userId }} </div>
+      </mat-list-item>
+      <!-- <mat-list-item>
+        <mat-icon mat-list-icon>format_list_bulleted</mat-icon>
+        <div mat-line> Nickname </div>
+        <div mat-line>  </div>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <button mat-menu-item style="text-align: center;" click="">
+        <mat-icon>create</mat-icon>
+        <span>Edit</span>
+      </button> -->
+    </mat-list>
+    
+  </mat-menu>
+
+  <!-- Home -->
+  <button mat-icon-button (click)="goHome()">
+    <mat-icon>home</mat-icon>
+  </button>
+</mat-toolbar>

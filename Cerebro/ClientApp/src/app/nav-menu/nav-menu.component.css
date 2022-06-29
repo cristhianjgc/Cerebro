@@ -1,0 +1,37 @@
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+html {
+  font-size: 14px;
+}
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+.header {
+  line-height: 28px;
+  font-size: x-large;
+  font-weight: bolder;
+}
+
+.subtitle {
+  font-size: small;
+  line-height: 16px;
+}
+
+::ng-deep .mat-menu-panel {
+  max-width: 500px!important;
+}
