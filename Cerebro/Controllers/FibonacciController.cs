@@ -9,11 +9,11 @@ namespace Cerebro.Controllers
     [Route("[controller]")]
     public class FibonacciController : ControllerBase
     {
-        private readonly GlobalSettings _settings;
+        private readonly string _connection;
 
         public FibonacciController(IOptions<GlobalSettings> settings)
         {
-            _settings = settings.Value;
+            _connection = settings.Value.ConnectionStrings.DefaultConnection;
         }
 
         [HttpGet("GetHistorical")]
@@ -27,7 +27,7 @@ namespace Cerebro.Controllers
                 {
                     Status = CerebroConstants.Ok,
                     Message = CerebroConstants.Success,
-                    Historical = SqlHelpers.GetAllRequests(_settings.ConnectionStrings.DefaultConnection)
+                    Historical = SqlHelpers.GetAllRequests(_connection)
                 };
 
                 return StatusCode(response.Status, response);
@@ -44,8 +44,8 @@ namespace Cerebro.Controllers
             }
         }
 
-        [HttpGet("GetPosition")]
-        public IActionResult GetPosition([FromQuery] ulong n)
+        [HttpPost("GetPosition")]
+        public IActionResult GetPosition([FromBody] FibonacciRequest request)
         {
             FibonacciResponse response;
 
@@ -53,10 +53,10 @@ namespace Cerebro.Controllers
             {
                 response = new FibonacciResponse
                 {
-                    Position = n,
+                    Position = request.Position,
                     Status = CerebroConstants.Ok,
                     Message = CerebroConstants.Success,
-                    Result = FibonacciHelpers.GetPosition(n, _settings)
+                    Result = FibonacciHelpers.GetPosition(request, _connection)
                 };
 
                 return StatusCode(response.Status, response);

@@ -1,6 +1,5 @@
 using System.Data;
 using Cerebro.Models;
-using System.Numerics;
 using Newtonsoft.Json;
 using Microsoft.Data.SqlClient;
 
@@ -38,6 +37,20 @@ namespace Cerebro.Helpers
             return fibonacciRequest;
         }
 
+        public static bool InsertRequest(string connection, FibonacciRequest data)
+        {
+            var request = JsonConvert.SerializeObject(new
+            {
+                data.UserId,
+                data.Result,
+                data.Position
+            });
+
+            var response = ExecuteStoredProcedure(StoredProcedures.InsertRequest, request, connection);
+            int.TryParse(response, out var nRows);
+            return nRows > 0;
+        }
+
         public static string ExecuteStoredProcedure(string spName, string request, string connection)
         {
             using (var client = new SqlConnection(connection))
@@ -58,20 +71,6 @@ namespace Cerebro.Helpers
 
                 return response;
             }
-        }
-
-        public static bool InsertRequest(string userId, ulong position, string connection, BigInteger result)
-        {
-            var request = JsonConvert.SerializeObject(new
-            {
-                UserId = userId,
-                Result = result,
-                Position = position
-            });
-
-            var response = ExecuteStoredProcedure(StoredProcedures.InsertRequest, request, connection);
-            int.TryParse(response, out var nRows);
-            return nRows > 0;
         }
     }
 }

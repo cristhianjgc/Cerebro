@@ -1,7 +1,7 @@
 import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { FibonacciResponse, HistoricalResponse } from 'src/app/core/models';
+import { FibonacciRequest, FibonacciResponse, HistoricalResponse } from 'src/app/core/models';
 
 @Injectable()
 export class HomeService {
@@ -13,8 +13,7 @@ export class HomeService {
     return this.http.get<HistoricalResponse>(`${this.baseUrl}/Fibonacci/getHistorical`);
   }
 
-  getPosition(n: number): Observable<FibonacciResponse> {
-    const params = new HttpParams().append('n', n);
-    return this.http.get<FibonacciResponse>(`${this.baseUrl}/Fibonacci/GetPosition`, {params});
+  getPosition(request: FibonacciRequest): Observable<FibonacciResponse> {
+    return this.http.post<FibonacciResponse>(`${this.baseUrl}/Fibonacci/GetPosition`, request);
   }
 }

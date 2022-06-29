@@ -17,10 +17,13 @@ BEGIN
 			RequestLog.Date AS RequestDate,
 			RequestLog.Position AS Position,
 			Users.Email AS Email,
+			Users.Nickname AS Nickname,
 			Users.Username AS Username
 		FROM
 			RequestLog LEFT OUTER JOIN
             Users ON RequestLog.UserId = Users.Id
+		ORDER BY
+			RequestDate DESC
 		FOR JSON  PATH
 	);
 END

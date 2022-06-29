@@ -5,6 +5,8 @@ import { HomeComponent } from './home/home.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
+import { MatSortModule } from '@angular/material/sort';
+import { MatMenuModule } from '@angular/material/menu';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { HttpClientModule } from '@angular/common/http';
 import { MatInputModule } from '@angular/material/input';
@@ -15,15 +17,20 @@ import { HomeService } from './home/services/home.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { ProfileComponent } from './profile/profile.component';
+import { StorageService } from './core/services/storage.service';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ProfileService } from './profile/services/profile.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
+    ProfileComponent,
     NavMenuComponent,
   ],
   imports: [
@@ -31,6 +38,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatCardModule,
     MatIconModule,
     MatListModule,
+    MatSortModule,
+    MatMenuModule,
     MatInputModule,
     MatTableModule,
     MatButtonModule,
@@ -38,6 +47,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatSliderModule,
     FlexLayoutModule,
     MatToolbarModule,
+    MatPaginatorModule,
     MatFormFieldModule,
     ReactiveFormsModule,
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -45,11 +55,16 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent },
+      { path: 'profile', component: ProfileComponent },
       { path: '**', redirectTo: '', pathMatch: 'full'}
     ]),
     BrowserAnimationsModule
   ],
-  providers: [HomeService],
+  providers: [
+    HomeService,
+    StorageService,
+    ProfileService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

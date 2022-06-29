@@ -20,3 +20,18 @@ html {
 .box-shadow {
   box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
+
+.header {
+  line-height: 28px;
+  font-size: x-large;
+  font-weight: bolder;
+}
+
+.subtitle {
+  font-size: small;
+  line-height: 16px;
+}
+
+::ng-deep .mat-menu-panel {
+  max-width: 500px!important;
+}

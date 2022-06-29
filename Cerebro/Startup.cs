@@ -18,7 +18,10 @@ namespace Cerebro
 
             services.AddSession();
             services.AddSignalR();
-            services.AddControllersWithViews().AddNewtonsoftJson();
+            services.AddControllersWithViews(options =>
+            {
+                options.AllowEmptyInputInBodyModelBinding = true;
+            }).AddNewtonsoftJson();
             services.AddCors(o => o.AddPolicy("CorsPolicy", builder =>
             {
                 builder

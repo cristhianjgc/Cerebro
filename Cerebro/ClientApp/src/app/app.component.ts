@@ -1,9 +1,34 @@
-import { Component } from '@angular/core';
+import { lastValueFrom } from 'rxjs';
+import { UserResponse } from './core/models';
+import { Component, OnInit } from '@angular/core';
+import { StorageService } from './core/services/storage.service';
+import { ProfileService } from './profile/services/profile.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'app';
+  userId: string = '';
+
+  constructor(
+    private profileService: ProfileService,
+    private storageService: StorageService
+  ) {
+
+  }
+
+  ngOnInit() {
+    this.userId = this.storageService.getItemFromSessionStorage('userId');
+    if (!this.userId) {
+      const user$ = this.profileService.createUser(null);
+      lastValueFrom(user$).then((response: UserResponse) => {
+        this.userId = response.user.userId;
+        this.storageService.setItemToSessionStorage('userId', this.userId);
+      }).catch((error) => {
+        console.log(error);
+      });
+    }
+  }
 }

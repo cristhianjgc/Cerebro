@@ -1,0 +1,75 @@
+<!-- Calculation -->
+<mat-card class="container-card">
+  <mat-card-header>
+    <mat-card-title>
+      Profile
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="w-100" fxLayout="column" fxLayoutAlign="start start">
+    <p>Calculate the n-th number in the Fibonacci sequence</p>
+    <div class="w-100" fxLayout="row" fxLayoutAlign="space-between stretch">
+      <form class="w-50" [formGroup]="fibonacci">
+        <!-- Input Nth -->
+        <div class="w-100" fxLayout="column">
+          <mat-form-field appearance="outline">
+            <mat-label>Position Nth</mat-label>
+            <input matInput type="number" placeholder="Position Nth" formControlName="nth" required/>
+            <button *ngIf="fibonacci.controls.nth.value" matSuffix mat-icon-button (click)="fibonacci.controls.nth.setValue('')">
+              <mat-icon>close</mat-icon>
+            </button>
+            <mat-error *ngIf="fibonacci.controls.nth.hasError('required')">
+              Value is <strong>required</strong>
+            </mat-error>
+            <mat-error *ngIf="fibonacci.controls.nth.hasError('min')">
+              Value should be greater than '<strong>0</strong>'
+            </mat-error>
+            <mat-error *ngIf="fibonacci.controls.nth.hasError('max')">
+              Value should be less than '<strong>18.446.744.073.709.551.615</strong>'
+            </mat-error>
+          </mat-form-field>
+        </div>
+      
+        <!-- Buttons -->
+        <div fxLayout="row" fxLayoutAlign="space-between stretch">
+          <!-- Back -->
+          <div class="w-50" fxLayout="column">
+            <button mat-raised-button color="accent"
+              (click)="fibonacci.controls.nth.setValue('')">
+                CLEAR
+            </button>
+          </div>
+      
+          <!-- Space -->
+          <div class="w-100" fxLayout="column"></div>
+      
+          <!-- Submit -->
+          <div class="w-50" fxLayout="column">
+            <button mat-raised-button color="primary" click="">
+              OK
+            </button>
+          </div>
+        </div>
+      </form>
+      <div class="w-50">
+        <mat-list>
+          <div mat-subheader>
+            Your results: 
+          </div>
+          <!-- <mat-divider></mat-divider> -->
+          <h1
+            class="w-50"
+            style="margin-left: 20px;"
+            *ngIf="result || result === 0">
+              {{ result }}
+          </h1>
+          <!-- <mat-list-item *ngFor="let note of notes">
+            <mat-icon mat-list-icon>note</mat-icon>
+            <div mat-line> Position: ABC </div>
+            <div mat-line> User: 1234567890 </div>
+            <div mat-line> {{'2022-06-28T01:43:41.2733333' | date:'medium' }} </div>
+          </mat-list-item> -->
+        </mat-list>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

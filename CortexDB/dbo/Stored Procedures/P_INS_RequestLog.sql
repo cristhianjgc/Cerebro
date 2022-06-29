@@ -9,17 +9,23 @@ BEGIN
 	SET @Response = ''
 
 	-- DECLARE
+	DECLARE @Count INT
 	DECLARE @Position INTEGER = JSON_VALUE(@Request,'$.Position')
 	DECLARE @UserId NVARCHAR(50) = JSON_VALUE(@Request,'$.UserId')
 	DECLARE @Result NVARCHAR(MAX) = JSON_VALUE(@Request,'$.Result')
 
-	-- User ID
-	IF (@UserId IS NULL OR @UserId='')
-	BEGIN
-		SET @UserId = NULL
-	END
+	-- VALIDATION
+	SET @Count = (SELECT COUNT(*) FROM RequestLog WHERE UserId = @UserId AND Position = @Position)
 
 	-- EXECUTION
-	INSERT INTO RequestLog (UserId, Position, Result) VALUES (@UserId, @Position, @Result)
-	SET @Response = @@ROWCOUNT
+	IF (@Count = 0)
+	BEGIN
+		INSERT INTO RequestLog (UserId, Position, Result) VALUES (@UserId, @Position, @Result)
+		SET @Response = @@ROWCOUNT
+	END
+	ELSE
+	BEGIN
+		UPDATE RequestLog SET Date = GETDATE() WHERE UserId = @UserId AND Position = @Position
+		SET @Response = @@ROWCOUNT
+	END
 END

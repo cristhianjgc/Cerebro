@@ -20,9 +20,18 @@ namespace Cerebro.Helpers
             return previous;
         }
 
-        public static BigInteger GetPosition(ulong n, GlobalSettings settings)
+        public static BigInteger GetPosition(FibonacciRequest request, string connection)
         {
-            return n < 2 ? n : Fibonacci(n);
+            // Calculation
+            var result = request.Position < 2 ?
+                request.Position :
+                Fibonacci(request.Position);
+
+            // Store in DB
+            request.Result = result;
+            SqlHelpers.InsertRequest(connection, request);
+
+            return result;
         }
     }
 }

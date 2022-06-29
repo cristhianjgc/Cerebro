@@ -67,5 +67,8 @@
     <Build Include="dbo\Stored Procedures\P_INS_RequestLog.sql" />
     <Build Include="dbo\Stored Procedures\P_GET_RequestLog.sql" />
     <Build Include="dbo\Stored Procedures\P_GET_AllRequestLogs.sql" />
+    <Build Include="dbo\Stored Procedures\P_GET_User.sql" />
+    <Build Include="dbo\Stored Procedures\P_INS_User.sql" />
+    <Build Include="dbo\Stored Procedures\P_UPD_User.sql" />
   </ItemGroup>
 </Project>
