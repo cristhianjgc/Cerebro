@@ -1,8 +1,8 @@
 import { lastValueFrom } from 'rxjs';
 import { UserResponse } from './core/models';
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from './core/services/auth.service';
 import { StorageService } from './core/services/storage.service';
-import { ProfileService } from './profile/services/profile.service';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
   userId: string = '';
 
   constructor(
-    private profileService: ProfileService,
+    private authService: AuthService,
     private storageService: StorageService
   ) {
 
@@ -23,16 +23,20 @@ export class AppComponent implements OnInit {
     // Init User
     this.userId = this.storageService.getItemFromSessionStorage('userId');
     if (!this.userId) {
-      const user$ = this.profileService.createUser(null);
-      lastValueFrom(user$).then((response: UserResponse) => {
-        this.userId = response.user.userId;
-        this.profileService.setUser(this.userId);
-        this.storageService.setItemToSessionStorage('userId', this.userId);
-      }).catch((error) => {
-        console.log(error);
-      });
+      this.createNewUser();
     } else {
-      this.profileService.setUser(this.userId);
+      this.authService.setUser(this.userId);
     }
+  }
+
+  private createNewUser() {
+    const user$ = this.authService.createUser(null);
+    lastValueFrom(user$).then((response: UserResponse) => {
+      this.userId = response.user.userId;
+      this.authService.setUser(this.userId);
+      this.storageService.setItemToSessionStorage('userId', this.userId);
+    }).catch((error) => {
+      console.log(error);
+    });
   }
 }

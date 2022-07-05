@@ -3,8 +3,8 @@ import { lastValueFrom, Subscription } from 'rxjs';
 import { HomeService } from './services/home.service';
 import { FormBuilder, Validators } from "@angular/forms";
 import { MatPaginator } from '@angular/material/paginator';
+import { AuthService } from '../core/services/auth.service';
 import { MatTableDataSource } from '@angular/material/table';
-import { ProfileService } from '../profile/services/profile.service';
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FibonacciRequest, FibonacciResponse, HistoricalResponse } from '../core/models';
 
@@ -15,17 +15,19 @@ import { FibonacciRequest, FibonacciResponse, HistoricalResponse } from '../core
 })
 export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   notes = [1];
+  MIN_VALUE = 0;
   result?: number;
   usersPageSize = 5;
   userId: string = '';
   subs: Subscription[] = [];
   lastRequest?: FibonacciRequest;
+  MAX_VALUE = 18446744073709551615;
   usersPageSizeOptions = [5, 10, 25, 100];
   dataSource: MatTableDataSource<FibonacciRequest>;
   displayedColumns: string[] = ['user', 'position', 'result', 'date'];
 
   fibonacci = this.fb.group({
-    nth: [{ value: 0, disabled: false }, [Validators.required, Validators.min(0), Validators.max(18446744073709551615)]]
+    nth: [{ value: 0, disabled: false }, [Validators.required, Validators.min(this.MIN_VALUE), Validators.max(this.MAX_VALUE)]]
   });
 
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator | undefined;
@@ -33,8 +35,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     private fb: FormBuilder,
     private homeService: HomeService,
-    private profileService: ProfileService
-  )
+    private authService: AuthService)
   {
     this.dataSource = new MatTableDataSource<FibonacciRequest>([]);
   }
@@ -53,7 +54,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getUser() {
-    let u = this.profileService.userId$.subscribe((userId) => {
+    let u = this.authService.userId$.subscribe((userId) => {
       this.userId = userId;
     });
     this.subs.push(u);

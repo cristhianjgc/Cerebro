@@ -1,7 +1,7 @@
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ProfileService } from '../profile/services/profile.service';
 
 @Component({
   selector: 'app-nav-menu',
@@ -15,7 +15,7 @@ export class NavMenuComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private profileService: ProfileService
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -24,7 +24,7 @@ export class NavMenuComponent implements OnInit, OnDestroy {
   }
 
   getUser() {
-    let u = this.profileService.userId$.subscribe((userId) => {
+    let u = this.authService.userId$.subscribe((userId) => {
       this.userId = userId;
     });
     this.subs.push(u);
