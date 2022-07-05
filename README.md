@@ -14,7 +14,7 @@ This project is a simple web application which allow us to calculate the Nth pos
 
 The project const of 3 modules (2 of them are grouped under the main Cerebro project):
 
-- Cerebro UI: Angular frontend which consumes the service and presents the info to the user
+- Cerebro UI: web app developed with Angular that consumes the API and displays the information with a friendly user interface
 - Cerebro API REST: backend service which provides the logic controllers, models and some helper functions
 - Cortex DB: SQL project where we can manage all the DB structure including Tables, Stored Procedures and Views
 

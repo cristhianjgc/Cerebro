@@ -14,17 +14,18 @@ import { MatCommonModule } from '@angular/material/core';
 import { MatTableModule } from '@angular/material/table';
 import { BrowserModule } from '@angular/platform-browser';
 import { HomeService } from './home/services/home.service';
+import { AuthService } from './core/services/auth.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ProfileComponent } from './profile/profile.component';
 import { StorageService } from './core/services/storage.service';
-import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProfileService } from './profile/services/profile.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NavMenuComponent } from './core/components/nav-menu/nav-menu.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   ],
   providers: [
     HomeService,
+    AuthService,
     StorageService,
     ProfileService
   ],
