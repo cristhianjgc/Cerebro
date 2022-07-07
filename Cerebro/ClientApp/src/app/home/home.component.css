@@ -1,6 +1,12 @@
-.container-card {
+.calculation-card {
     margin-top: 20px;
     min-height: 250px;
+}
+
+.historical-card {
+    margin-top: 20px;
+    min-height: 250px;
+    margin-bottom: 20px;
 }
 
 ::ng-deep .mat-subheader {
