@@ -7,10 +7,10 @@ namespace Cerebro.Helpers
     {
         public static BigInteger Fibonacci(ulong n)
         {
-            BigInteger current = 1;
-            BigInteger previous = 0;
+            BigInteger current = 2;
+            BigInteger previous = 1;
 
-            for (ulong i = 0; i < n; i++)
+            for (ulong i = 2; i < n; i++)
             {
                 var next = previous + current;
                 previous = current;

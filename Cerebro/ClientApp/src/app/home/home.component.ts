@@ -125,7 +125,7 @@ export class HomeComponent implements OnInit, OnDestroy, AfterViewInit {
 
   clearResult() {
     this.result = undefined;
-    this.fibonacci.controls.nth.setValue('');
+    this.fibonacci.controls.nth.setValue(0);
   }
 
   ngOnDestroy(): void {
